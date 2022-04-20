@@ -23,10 +23,10 @@ if random_num_fig_crupier == 'J' or random_num_fig_crupier == 'Q' or random_num_
 elif random_num_fig_crupier == 'AS':
     crupier_sum += 11
 else:
-    player_sum += random_num_fig_crupier
+    crupier_sum += random_num_fig_crupier
 
-print('Carta y valor del jugador: ', random_pale_player, player_sum)
-print('Carta y valor del crupier: ', random_pale_crupier, crupier_sum)
+print('Carta y valor del jugador: ', random_pale_player, random_num_fig_player)
+print('Carta y valor del crupier: ', random_pale_crupier, random_num_fig_crupier)
 
 random_num_fig_player = random.choice(sec)
 random_pale_player = random.choice(palos)
@@ -39,8 +39,6 @@ if random_num_fig_player == 'J' or random_num_fig_player == 'Q' or random_num_fi
 elif random_num_fig_player == 'AS':
     if (player_sum + 11) < 21:
         player_sum += 11
-    elif (player_sum + 11) == 21:
-        player_sum += 0
     else:
         player_sum += 1
 else:
@@ -49,15 +47,64 @@ else:
 if random_num_fig_crupier == 'J' or random_num_fig_crupier == 'Q' or random_num_fig_crupier == 'K':
     crupier_sum += 10
 elif random_num_fig_crupier == 'AS':
-    if (player_sum + 11) < 21:
-        player_sum += 11
-    elif (player_sum + 11) == 21:
-        player_sum += 0
+    if (crupier_sum + 11) < 21:
+        crupier_sum += 11
     else:
-        player_sum += 1
+        crupier_sum += 1
 else:
     crupier_sum += random_num_fig_crupier
 
+print('Carta y valor del jugador: ', random_pale_player, random_num_fig_player)
+print('Carta y valor del crupier: ', random_pale_crupier, random_num_fig_crupier)
 
+if player_sum >= 21:
+    print('Igualaste o superaste los 21')
+elif crupier_sum >= 21:
+    print('Igualaste o superaste los 21')
+else:
+    random_num_fig_player = random.choice(sec)
+    random_pale_player = random.choice(palos)
+    random_num_fig_crupier = random.choice(sec)
+    random_pale_crupier = random.choice(palos)
 
-print(player_sum, crupier_sum)
+    if random_num_fig_player == 'J' or random_num_fig_player == 'Q' or random_num_fig_player == 'K':
+        player_sum += 10
+    elif random_num_fig_player == 'AS':
+        if (player_sum + 11) < 21:
+            player_sum += 11
+        else:
+            player_sum += 1
+    else:
+        player_sum += random_num_fig_player
+
+if random_num_fig_crupier == 'J' or random_num_fig_crupier == 'Q' or random_num_fig_crupier == 'K':
+    crupier_sum += 10
+elif random_num_fig_crupier == 'AS':
+    if (crupier_sum + 11) < 21:
+        crupier_sum += 11
+    else:
+        crupier_sum += 1
+else:
+    crupier_sum += random_num_fig_crupier
+
+if crupier_sum > 21 and player_sum > 21:
+    print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+    print('Ninguno de los dos participantes ganó')
+elif crupier_sum > 21:
+    print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+    print('Ganaste, el croupier perdió')
+elif player_sum > 21:
+    print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+    print('Perdiste, el croupier ganó')
+elif crupier_sum <= 21 and player_sum <= 21:
+    player_total = 21 - player_sum
+    crupier_total = 21 - crupier_sum
+    if player_total > crupier_total:
+        print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+        print('Perdiste, el croupier gano \nValor crupier: ', crupier_sum)
+    elif player_total == crupier_total:
+        print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+        print(f'Es un empate \nValor del jugador: {player_sum, random_pale_player} \nValor del crupier: {crupier_sum, random_pale_crupier}')
+    else:
+        print(f'Tus valores son: {random_pale_player, random_num_fig_player}')
+        print(f'Ganaste!, tus valores son {player_sum, random_pale_player}')
