@@ -1,0 +1,63 @@
+#21 BLACKJACK
+
+import random
+
+sec = 2, 3, 4, 5, 6, 7, 8, 9, 10, 'AS', 'J', 'Q', 'K'
+palos = 'Picas', 'Corazones', 'Rombos', 'Treboles'
+random_num_fig_player = random.choice(sec)
+random_pale_player = random.choice(palos)
+random_num_fig_crupier = random.choice(sec)
+random_pale_crupier = random.choice(palos)
+crupier_sum = 0
+player_sum = 0
+
+if random_num_fig_player == 'J' or random_num_fig_player == 'Q' or random_num_fig_player == 'K':
+    player_sum += 10
+elif random_num_fig_player == 'AS':
+    player_sum += 11
+else:
+    player_sum += random_num_fig_player
+
+if random_num_fig_crupier == 'J' or random_num_fig_crupier == 'Q' or random_num_fig_crupier == 'K':
+    crupier_sum += 10
+elif random_num_fig_crupier == 'AS':
+    crupier_sum += 11
+else:
+    player_sum += random_num_fig_crupier
+
+print('Carta y valor del jugador: ', random_pale_player, player_sum)
+print('Carta y valor del crupier: ', random_pale_crupier, crupier_sum)
+
+random_num_fig_player = random.choice(sec)
+random_pale_player = random.choice(palos)
+random_num_fig_crupier = random.choice(sec)
+random_pale_crupier = random.choice(palos)
+
+
+if random_num_fig_player == 'J' or random_num_fig_player == 'Q' or random_num_fig_player == 'K':
+    player_sum += 10
+elif random_num_fig_player == 'AS':
+    if (player_sum + 11) < 21:
+        player_sum += 11
+    elif (player_sum + 11) == 21:
+        player_sum += 0
+    else:
+        player_sum += 1
+else:
+    player_sum += random_num_fig_player
+
+if random_num_fig_crupier == 'J' or random_num_fig_crupier == 'Q' or random_num_fig_crupier == 'K':
+    crupier_sum += 10
+elif random_num_fig_crupier == 'AS':
+    if (player_sum + 11) < 21:
+        player_sum += 11
+    elif (player_sum + 11) == 21:
+        player_sum += 0
+    else:
+        player_sum += 1
+else:
+    crupier_sum += random_num_fig_crupier
+
+
+
+print(player_sum, crupier_sum)
