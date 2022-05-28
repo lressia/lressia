@@ -1,4 +1,4 @@
-#BLACKJACK 2.0
+#BLACKJACK 2.0 editar
 
 import random
 
