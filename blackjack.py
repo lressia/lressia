@@ -70,7 +70,7 @@ def control_natural(nombre,jugador,crupier):
     winer = False
     mensaje = "todavia no hay ganador"
     if jugador == 21:
-        ganador = jugaddor
+        ganador = jugador
         mensaje = nombre," gano la partida por black ajck natural"
         winer = True
     if crupier == 21:
@@ -101,13 +101,23 @@ suma_saldo = 0
 act_saldo = 0
 perdida_max = 0
 
+
+#ingreso de saldo
+print("ingreso de un monto para su pozo")
+ingreso_saldo = int(input("ingrese la cantidad de dinero que desea tener en su pozo \n el monto no debe ser menor a 0 ni mayor a 100000$"))
+while ingreso_saldo > 100000 or ingreso_saldo <= 0:
+    print("no se puede ingresar una cantidad superior a 100000$")
+    ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
+saldo += ingreso_saldo
+
+
 #ciclo que controla el menu
-while opcion != 0:
+while opcion != 3:
     print("MENU")
     print(18*"-")
     print("1 - Apostar")
     print("2 - Jugar una mano")
-    print("0 - Salir")
+    print("3 - Salir")
     opcion = int(input("elija la opcion deseada --> "))
     print()
     print()
@@ -115,15 +125,11 @@ while opcion != 0:
     #OPCION DE APUESTA
     if opcion == 1:
         print("ingreso de un monto para su pozo")
-        ingreso_saldo = int(input("ingrese la cantidad de dinero deseada \n el monto no debe ser menor a 0 ni mayor a 100000$"))
+        ingreso_saldo = int(input("ingrese la cantidad de dinero que desea tener en su pozo \n el monto no debe ser menor a 0 ni mayor a 100000$"))
         while ingreso_saldo > 100000 or ingreso_saldo <= 0:
             print("no se puede ingresar una cantidad superior a 100000$")
             ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
-        saldo = ingreso_saldo
-        if suma_saldo == 0:
-            suma_saldo = ingreso_saldo
-        else:
-            suma_saldo += ingreso_saldo
+        saldo += ingreso_saldo
 
     #OPCION DE JUEGO
 
@@ -193,7 +199,7 @@ while opcion != 0:
             else:
                 #rondas siguientes
                 desicion = 1
-                while puntaje_crupier <= 16 or desicion == 1:
+                while puntaje_crupier <= 16 or desicion == 1 and puntaje_crupier < 21 or puntaje_jugador < 21:
                     print()
                     print("SEGUIR JUEGO")
                     print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
@@ -239,5 +245,5 @@ while opcion != 0:
 
 
     #OPCION DE SALIR
-    elif opcion == 0:
+    elif opcion == 3:
         print("chau")
