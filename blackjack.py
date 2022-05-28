@@ -104,7 +104,7 @@ perdida_max = 0
 #ciclo que controla el menu
 while opcion != 0:
     print("MENU")
-    print(8*"-")
+    print(18*"-")
     print("1 - Apostar")
     print("2 - Jugar una mano")
     print("0 - Salir")
@@ -114,127 +114,127 @@ while opcion != 0:
 
     #OPCION DE APUESTA
     if opcion == 1:
-        print("si desea ingresar saldo ingrese - 1")
-        print("si desea apostar ingrese - 2")
-        actividad = int(input("ingrse la opcion deseada --> "))
-        if actividad == 1:
-            ingreso_saldo = int(input("ingrese la cantidad de dinero deseada \n el monto no debe ser menor a 0 ni mayor a 100000$"))
-            while ingreso_saldo > 100000 or ingreso_saldo < 0:
-                print("no se puede ingresar una cantidad superior a 100000$")
-                ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
-            saldo = ingreso_saldo
-            if suma_saldo == 0:
-                suma_saldo = ingreso_saldo
-            else:
-                suma_saldo += ingreso_saldo
-        elif actividad == 2:
-            apuesta = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
-            while apuesta > saldo:
-                print("no cuentas con suficiente dinero para realizar esta apuesta")
-                apuesta = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
+        print("ingreso de un monto para su pozo")
+        ingreso_saldo = int(input("ingrese la cantidad de dinero deseada \n el monto no debe ser menor a 0 ni mayor a 100000$"))
+        while ingreso_saldo > 100000 or ingreso_saldo <= 0:
+            print("no se puede ingresar una cantidad superior a 100000$")
+            ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
+        saldo = ingreso_saldo
+        if suma_saldo == 0:
+            suma_saldo = ingreso_saldo
+        else:
+            suma_saldo += ingreso_saldo
 
     #OPCION DE JUEGO
+
     elif opcion == 2:
-        #inicializaciones
-        cartas_jugador = "n"
-        cartas_crupier = "n"
-        puntaje_jugador = None
-        puntaje_crupier = None
-
-        #primera ronda
-        carta1_jugador = carta_random()
-        carta2_jugador = carta_random()
-
-        #validacion si la carta es un as
-        valor_jugador = control_as(carta1_jugador[2],carta2_jugador[2])
-
-        carta1_crupier = carta_random()
-        carta2_crupier = carta_random()
-
-        valor_crupier = control_as(carta1_crupier[2],carta2_crupier[2])
-
-        print("las primeras dos cartas de ",nombre," son: \n--> ",carta1_jugador[0]+carta1_jugador[1],"\n--> ",carta2_jugador[0]+carta2_jugador[1])
-        print("\nlas cartas del crupier son: \n--> ",carta1_crupier[0]+carta1_crupier[1],"\n--> ",carta2_crupier[0]+carta2_crupier[1])
-
-        cartas_jugador += (carta1_jugador[0]+carta1_jugador[1]) + (carta2_jugador[0]+carta2_jugador[1])
-
-        cartas_crupier += (carta1_crupier[0]+carta1_crupier[1]) + (carta2_crupier[0]+carta2_crupier[1])
-
-        puntaje_jugador = carta1_jugador[2] + valor_jugador
-        puntaje_crupier = carta1_crupier[2] + valor_crupier
-
-        print("el puntaje actual de ",nombre," es --> ",puntaje_jugador)
-        print("el puntaje actual del crupier es--> ",puntaje_crupier)
-
-        #control black jack natural
-        control = control_natural(nombre,puntaje_jugador,puntaje_crupier)
-        winer = control[0]
-        if winer == True:
-            resultado = control_resultado(nombre,puntaje_jugador,apuesta,puntaje_crupier)
-            print(control[1])
-            print("el saldo de ",nombre," antes de esta mano era de:",saldo)
-            print("la apuesta de ",nombre," fue de:",apuesta)
-            print("el saldo actual de ",nombre," es de:",(saldo+resultado[1]))
-            print("las cartas de ",nombre," fueron:",cartas_jugador)
-            print("las cartas del crupier fueron:",cartas_crupier)
-
-            #PROCESOS
-            if control[2] == puntaje_jugador:
-                victoria_jugador += 1
-            else:
-                victoria_crupier += 1
-            cant_blackjack_nat += 1
-            suma_saldo += resultado[1]
-            act_saldo += 1
-            if apuesta > apuesta_max:
-                apuesta_max = apuesta
-
-
+        apuesta = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
+        while apuesta > saldo or apuesta < 0 or apuesta%5 != 0:
+            print("no cuentas con suficiente dinero para realizar esta apuesta")
+            apuesta = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
+        if apuesta == None:
+            print("debes apostar antes de jugar")
         else:
-            #rondas siguientes
-            desicion = 1
-            while puntaje_crupier <= 16 or desicion == 1:
-                print()
-                print("SEGUIR JUEGO")
-                print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
-                print()
-                desicion = int(input("ingrese la opcion deseada --> "))
-                if puntaje_crupier >= 17:
-                    print("el crupier se planto")
-                else:
-                    carta_crupier = carta_random()
-                    valor_crupier = control_as(puntaje_crupier,carta_crupier[2])
-                    puntaje_crupier += valor_crupier
-                    print("el crupier saco la carta--> ",carta_crupier[0]+carta_crupier[1],"\nel puntaje actual del crupier es--> ",puntaje_crupier)
-                    cartas_crupier += carta_crupier[0]+carta_crupier[1]
-                if desicion != 1:
-                    print(nombre," se planto")
-                else:
-                    carta_jugador = carta_random()
-                    valor_jugador = control_as(puntaje_jugador,carta_jugador[2])
-                    puntaje_jugador += valor_jugador
-                    print(nombre," saco la carta--> ",carta_jugador[0]+carta_jugador[1],"\nel puntaje actual de ",nombre," es--> ",puntaje_jugador)
-                    cartas_jugador += (carta_jugador[0]+carta_jugador[1])
-            print()
-            input("precione enter para ver los resultados...")
-            print()
-            resultado = control_resultado(nombre,puntaje_jugador,apuesta,puntaje_crupier)
-            print(resultado[0])
-            print("el saldo de ",nombre," antes de esta mano era de:",saldo)
-            print("la apuesta de ",nombre," fue de:",apuesta)
-            print("el saldo actual de ",nombre," es de:",(saldo+resultado[1]))
-            print("las cartas de ",nombre," fueron:",cartas_jugador)
-            print("las cartas del crupier fueron:",cartas_crupier)
+            #inicializaciones
+            cartas_jugador = None
+            cartas_crupier = None
+            puntaje_jugador = None
+            puntaje_crupier = None
 
-            #PROCESOS
-            if resultado[2] == 1:
-                victoria_jugador += 1
-            elif resultado[2] == 2:
-                victoria_crupier += 1
-            suma_saldo += resultado[1]
-            act_saldo += 1
-            if apuesta > apuesta_max:
-                apuesta_max = apuesta
+            #primera ronda
+            carta1_jugador = carta_random()
+            carta2_jugador = carta_random()
+
+            #validacion si la carta es un as
+            valor_jugador = control_as(carta1_jugador[2],carta2_jugador[2])
+
+            carta1_crupier = carta_random()
+            carta2_crupier = carta_random()
+
+            valor_crupier = control_as(carta1_crupier[2],carta2_crupier[2])
+
+            print("las primeras dos cartas de ",nombre," son: \n--> ",carta1_jugador[0]+carta1_jugador[1],"\n--> ",carta2_jugador[0]+carta2_jugador[1])
+            print("\nlas cartas del crupier son: \n--> ",carta1_crupier[0]+carta1_crupier[1],"\n--> ",carta2_crupier[0]+carta2_crupier[1])
+
+            cartas_jugador += (carta1_jugador[0]+carta1_jugador[1]) + (carta2_jugador[0]+carta2_jugador[1])
+
+            cartas_crupier += (carta1_crupier[0]+carta1_crupier[1]) + (carta2_crupier[0]+carta2_crupier[1])
+
+            puntaje_jugador = carta1_jugador[2] + valor_jugador
+            puntaje_crupier = carta1_crupier[2] + valor_crupier
+
+            print("el puntaje actual de ",nombre," es --> ",puntaje_jugador)
+            print("el puntaje actual del crupier es--> ",puntaje_crupier)
+
+            #control black jack natural
+            control = control_natural(nombre,puntaje_jugador,puntaje_crupier)
+            winer = control[0]
+            if winer == True:
+                resultado = control_resultado(nombre,puntaje_jugador,apuesta,puntaje_crupier)
+                print(control[1])
+                print("el saldo de ",nombre," antes de esta mano era de:",saldo)
+                print("la apuesta de ",nombre," fue de:",apuesta)
+                print("el saldo actual de ",nombre," es de:",(saldo+resultado[1]))
+                print("las cartas de ",nombre," fueron:",cartas_jugador)
+                print("las cartas del crupier fueron:",cartas_crupier)
+
+                #PROCESOS
+                if control[2] == puntaje_jugador:
+                    victoria_jugador += 1
+                else:
+                    victoria_crupier += 1
+                cant_blackjack_nat += 1
+                suma_saldo += resultado[1]
+                act_saldo += 1
+                if apuesta > apuesta_max:
+                    apuesta_max = apuesta
+
+
+            else:
+                #rondas siguientes
+                desicion = 1
+                while puntaje_crupier <= 16 or desicion == 1:
+                    print()
+                    print("SEGUIR JUEGO")
+                    print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                    print()
+                    desicion = int(input("ingrese la opcion deseada --> "))
+                    if puntaje_crupier >= 17:
+                        print("el crupier se planto")
+                    else:
+                        carta_crupier = carta_random()
+                        valor_crupier = control_as(puntaje_crupier,carta_crupier[2])
+                        puntaje_crupier += valor_crupier
+                        print("el crupier saco la carta--> ",carta_crupier[0]+carta_crupier[1],"\nel puntaje actual del crupier es--> ",puntaje_crupier)
+                        cartas_crupier += carta_crupier[0]+carta_crupier[1]
+                    if desicion != 1:
+                        print(nombre," se planto")
+                    else:
+                        carta_jugador = carta_random()
+                        valor_jugador = control_as(puntaje_jugador,carta_jugador[2])
+                        puntaje_jugador += valor_jugador
+                        print(nombre," saco la carta--> ",carta_jugador[0]+carta_jugador[1],"\nel puntaje actual de ",nombre," es--> ",puntaje_jugador)
+                        cartas_jugador += (carta_jugador[0]+carta_jugador[1])
+                print()
+                input("precione enter para ver los resultados...")
+                print()
+                resultado = control_resultado(nombre,puntaje_jugador,apuesta,puntaje_crupier)
+                print(resultado[0])
+                print("el saldo de ",nombre," antes de esta mano era de:",saldo)
+                print("la apuesta de ",nombre," fue de:",apuesta)
+                print("el saldo actual de ",nombre," es de:",(saldo+resultado[1]))
+                print("las cartas de ",nombre," fueron:",cartas_jugador)
+                print("las cartas del crupier fueron:",cartas_crupier)
+
+                #PROCESOS
+                if resultado[2] == 1:
+                    victoria_jugador += 1
+                elif resultado[2] == 2:
+                    victoria_crupier += 1
+                suma_saldo += resultado[1]
+                act_saldo += 1
+                if apuesta > apuesta_max:
+                    apuesta_max = apuesta
 
 
 
