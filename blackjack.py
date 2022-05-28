@@ -103,10 +103,10 @@ perdida_max = 0
 
 
 #ingreso de saldo
-print("ingreso de un monto para su pozo")
-ingreso_saldo = int(input("ingrese la cantidad de dinero que desea tener en su pozo \n el monto no debe ser menor a 0 ni mayor a 100000$"))
-while ingreso_saldo > 100000 or ingreso_saldo <= 0:
-    print("no se puede ingresar una cantidad superior a 100000$")
+print("INGRESO DEL SALDO")
+ingreso_saldo = int(input("ingrese la cantidad de dinero que desea tener en su pozo \nel monto no debe ser menor a 0 ni mayor a 100000$ -->"))
+while ingreso_saldo > 100000 or ingreso_saldo <= 0 or apuesta%5 != 0:
+    print("no se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
     ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
 saldo += ingreso_saldo
 
@@ -126,7 +126,7 @@ while opcion != 3:
     if opcion == 1:
         print("ingreso de un monto para su pozo")
         ingreso_saldo = int(input("ingrese la cantidad de dinero que desea tener en su pozo \n el monto no debe ser menor a 0 ni mayor a 100000$"))
-        while ingreso_saldo > 100000 or ingreso_saldo <= 0:
+        while ingreso_saldo > 100000 or ingreso_saldo <= 0 or apuesta%5 != 0:
             print("no se puede ingresar una cantidad superior a 100000$")
             ingreso_saldo = int(input("ingrese la cantidad de dinero deseada -->"))
         saldo += ingreso_saldo
@@ -247,3 +247,4 @@ while opcion != 3:
     #OPCION DE SALIR
     elif opcion == 3:
         print("chau")
+
