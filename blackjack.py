@@ -9,13 +9,20 @@ pale = 'de Picas ♠', 'de Corazones ♥', 'de Rombos ♦', 'de Tréboles ♣'
 
 
 
-def card_generator(cards, pale):
+def card_value_generator(cards):
 
     random_num_fig_player = random.choice(cards)
-    random_pale_player = random.choice(pale)
-    print(random_num_fig_player, random_pale_player)
-    return random_num_fig_player, random_pale_player
+    if random_num_fig_player == 'J' or random_num_fig_player == 'Q' or random_num_fig_player == 'K':
+      random_num_fig_player_value = 10
+    elif random_num_fig_player == 'AS':
+      random_num_fig_player_value = 11
+    else:
+        random_num_fig_player_value = random_num_fig_player
+    print(random_num_fig_player)
+    return random_num_fig_player
 
+def card_pale_generator(pale):
+    random_pale_player = random.choice(pale)
 def main_game():
     option = None
     card_player_count = 0
