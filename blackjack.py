@@ -8,44 +8,70 @@ def card_generator():
     names = (" -AS"," -2"," -3"," -4"," -5"," -6"," -7"," -8"," -9"," -10"," -J"," -Q"," -K")
     pales = (" de picas"," de corazones"," de diamantes"," de treboles")
     index = random.randint(0,12)
-    pale = str(random.choice(palos))
+    pale = str(random.choice(pales))
+
     return names[index],pale,value[index]
 
 
-def control_natural(nombre,jugador,crupier):
-    ganador = 0
-    winer = False
-    mensaje = "todavia no hay ganador"
-    if jugador == 21:
-        ganador = jugador
-        mensaje = nombre," gano la partida por black ajck natural"
-        winer = True
-    if crupier == 21:
-        ganador = crupier
-        mensaje = "el crupier gano la partida por black jack natural"
-        winer = True
-    if jugador == 21 and crupier == 21:
-        ganador = 0
-        mensaje = "todavia no hay ganador"
-        winer = False
-    return winer,mensaje,ganador
+def natural_control(player_score, crupier_score):
+    winner = 0
+    winner_state = False
+    if player_score == 21:
+        winner = player_score
+        winner_state = True
+    if crupier_score == 21:
+        winner = crupier_score
+        winner_state = True
+    if player_score == 21 and crupier_score == 21:
+        winner = 0
+        winner_state = False
+    return winner_state, winner
 
-
+def check_result(player_name, player_score, bet, crupier_score):
+    amount_money_box = 0
+    winner = None
+    message = None
+    if player_score <= 21:
+        if crupier_score > 21:
+            message =("El crupier se paso de 21 y ", player_name, "gana con ",player_score, "puntos")
+            amount_money_box = bet * 2
+            winner = 1
+        elif player_score > crupier_score:
+            message = (player_name, "gana con ", player_score, "puntos")
+            amount_money_box = bet * 2
+            winner = 1
+        elif player_score == crupier_score:
+            message = (player_name, "y el crupier empatan con ", crupier_score, "puntos")
+            amount_money_box = bet
+            winner = 0
+        else:
+            message = ("El crupier gano con ", crupier_score, "puntos")
+            amount_money_box -= bet
+            winner = 2
+    elif crupier_score > 21:
+        message = (player_name, "y el crupier se pasaron de 21, así que el crupier gana")
+        amount_money_box -= bet
+        winner = 0
+    else:
+        message = (player_name, "se paso de 21 y el crupier gano con ", crupier_score, "puntos")
+        amount_money_box -= bet
+        winner = 2
+    return message, amount_money_box, winner
 
 def main_game():
     option = None
     amount_money_box = 0
     amount_money_box_plus = 0
-    winer = False
+    winner = False
     bet = None
     card_player_count = 0
     card_player_value = 0
     victory_player = 0
     victory_crupier = 0
     cant_blackjack_nat = 0
+    player_name = False
 
-
-
+    # PEDIDO DE NOMBRE Y CANTIDAD DE DINERO
     player_name = str(input('Ingrese su nombre --> '))
     print('Bienvenido', player_name, '!, ahora ingrese su monto')
     amount_money_box = int(input("ingrese la cantidad de dinero que desea tener en su pozo \nel monto no debe ser menor a 0 ni mayor a 100000$ -->"))
@@ -62,11 +88,12 @@ def main_game():
 
         #OPCION DE APUESTA
         if option == 1:
-            while amount_money_box_plus <= 0:
+            while amount_money_box_plus <= 0 or amount_money_box_plus > 1000000:
                 print("no se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
                 amount_money_box_plus = int(input("ingrese la cantidad de dinero deseada --> "))
-                if (amount_money_box_plus % 5) == 0 and (amount_money_box_plus + amount_money_box) <= 100000:
+                if (amount_money_box_plus + amount_money_box) <= 100000:
                     amount_money_box += amount_money_box_plus
+                    amount_money_box_plus = 0
                 else:
                     print('El monto ingresado no es multiplo de 5 o el total entre este monto y el primero supera la cantidad de cien mil pesos')
 
@@ -74,11 +101,11 @@ def main_game():
         elif option == 2:
 
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
-            while bet > amount_money_box or bet < 0 or bet%5 != 0:
+            while bet > amount_money_box or bet < 0 or (bet % 5) != 0:
 
                 if bet % 5 != 0:
                     print("La apuesta debe ser múltiplo de 5. Ingrese otra vez: ")
-                elif bet > saldo:
+                elif bet > amount_money_box:
                     print("no cuentas con suficiente dinero para realizar esta apuesta")
                 elif bet < 0:
                     print("La apuesta debe ser mayor que 0. Ingrese otra vez: ")
@@ -86,57 +113,50 @@ def main_game():
             if bet == None:
                 print("debes apostar antes de jugar")
             else:
-                #return name,palo,value
+                #return name,pale,value
                 #GENERACION DE CARTAS DEL CRUPIER
                 card1_crupier = card_generator()
-
                 crupier_score = card1_crupier[2]
-
-                card1 = card1_crupier[0] + card1_crupier[1]
-
-                cards_crupier = card1
+                name_crupier_card1 = card1_crupier[0] + card1_crupier[1]
+                total_cards_crupier = name_crupier_card1
 
                 #GENERACION DE CARTAS DEL JUGADOR
                 card_player_1 = card_generator()
                 card_player_2 = card_generator()
-
                 player_score = card_player_1[2] + card_player_2[2]
+                name_player_card1 = card_player_1[0] + card_player_1[1]
+                name_player_card2 = card_player_2[0] + card_player_2[1]
+                total_cards_player = name_player_card1 + name_player_card2
 
-                card1 = card_player_1[0] + card_player_1[1]
-                card2 = card_player_2[0] + card_player_2[1]
 
-                cards_player = card1 + card2
+                print("las primeras dos cartas de ", player_name, " son: \n--> ", total_cards_player, "\nla carta del crupier es: \n--> ",total_cards_crupier)
 
-                print("las primeras dos cartas de ", player_name, " son: \n--> ", card_player_1[0] + card_player_1[1], "\n--> ", card_player_2[0] + card_player_2[1])
-                print("\nla carta del crupier es: \n--> ",carta1_crupier[0]+carta1_crupier[1])
-
-                #control black jack natural
-                control = control_natural(player_name, player_score, crupier_score)
+                #CONTROL BLACK JACK NATURAL
+                control = natural_control(player_score, crupier_score)
                 winner = control[0]
                 if winner == True:
-                    result = control_resultado(player_name, player_score, bet, crupier_score)
-                    print(control[1])
+                    result = check_result(player_name, player_score, bet, crupier_score)
                     print("el saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
                     print("la apuesta de ", player_name, " fue de:", bet)
                     print("el saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
-                    print("las cartas de ", player_name, " fueron:", cards_player)
-                    print("las cartas del crupier fueron:",cards_crupier)
+                    print("las cartas de ", player_name, " fueron:", total_cards_player)
+                    print("las cartas del crupier fueron:",total_cards_crupier)
 
                     #PROCESOS
-                    if control[2] == player_score:
-                        victory_player += 1
-                    else:
-                        victory_crupier += 1
-                    cant_blackjack_nat += 1
-                    suma_saldo += resultado[1]
-                    act_saldo += 1
-                    if bet > apuesta_max:
-                        apuesta_max = bet
-                    puntaje_crupier = 0
-                    puntaje_jugador = 0
-                
-                while player_score < 21:
-                    
+                #     if control[2] == player_score:
+                #         victory_player += 1
+                #     else:
+                #         victory_crupier += 1
+                #     cant_blackjack_nat += 1
+                #     suma_saldo += resultado[1]
+                #     act_saldo += 1
+                #     if bet > apuesta_max:
+                #         apuesta_max = bet
+                #     puntaje_crupier = 0
+                #     puntaje_jugador = 0
+                #
+                # while player_score < 21:
+
 
 main_game()
 
