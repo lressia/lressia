@@ -833,7 +833,6 @@ main_game()
 #     elif opcion == 3:
 #         print("chau")
 #BLACKJACK 2.0
-
 import random
 
 
@@ -927,6 +926,7 @@ def main_game():
     total_cards_crupier = None
     amount_money_box_max = None
     max_bet_lost = None
+    flag_finish_game = False
 
     # PEDIDO DE NOMBRE Y CANTIDAD DE DINERO
     player_name = str(input('Ingrese su nombre --> '))
@@ -959,7 +959,7 @@ def main_game():
                     amount_money_box_plus = 0
         #OPCION DE JUGAR UNA MANO
         elif option == 2:
-            
+
             print("Su saldo disponible es :", amount_money_box)
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
             while bet > amount_money_box or bet <= 0 or (bet % 5) != 0:
@@ -1017,9 +1017,7 @@ def main_game():
                         player_score += value_card
                         print(player_name, " saco la carta--> ", player_card[0] + player_card[1], "\nel puntaje actual de ", player_name, " es--> ", player_score)
                         total_cards_player += card
-                        if player_score > 21:
-                            print(player_name," se paso")
-                        else:
+                        if player_score < 21:
                             #MENU PARA EL JUGADOR
                             print()
                             print("SEGUIR JUEGO")
@@ -1028,6 +1026,8 @@ def main_game():
                             desicion = int(input("ingrese la opcion deseada --> "))
                     if desicion == 0:
                         print(player_name, " se planto")
+                    if player_score > 21:
+                        print(player_name," se paso")
                     #GENERACION DE CARTAS DEL CRUPIER
                 while crupier_score < 21 and crupier_score < 17:
 
@@ -1039,10 +1039,11 @@ def main_game():
                         value_card = as_control(crupier_score,crupier_card[2])
                         crupier_score += value_card
                         total_cards_crupier += card
-                if crupier_score >= 17 and crupier_score <= 21:
-                    print("el crupier se planto")
-                elif crupier_score > 21:
-                    print("el crupier se paso")
+                if winner == False:
+                    if crupier_score >= 17 and crupier_score <= 21:
+                        print("el crupier se planto")
+                    elif crupier_score > 21:
+                        print("el crupier se paso")
 
                 print("\n\n")
                 result = check_result(player_name, player_score, bet, crupier_score,winner)
@@ -1055,6 +1056,7 @@ def main_game():
                 print("las cartas del crupier fueron:",total_cards_crupier)
 
                             #PROCESOS
+                flag_finish_game = True
                 if result[2] == 2:
                     victory_crupier_flag = True
                     victory_crupier += 1
@@ -1082,15 +1084,18 @@ def main_game():
                 act_amount_money_box += 1
                 acu_amount_money_box += amount_money_box
 
-    print("\n\n")
-    print("ESTADISTICAS DEL JUEGO")
-    print("\nEl porcentaje de victorias del jugador es: ",(victory_player*100)/cont_games)
-    print("Cantidad de manos donde hubo un black jack natural: ",cant_blackjack_nat)
-    print("Monto maximo de",player_name,"en el pozo: ",amount_money_box_max)
-    print("La cantidad promedio de dinero que tuvo ",player_name," en su pozo fue: ",acu_amount_money_box / act_amount_money_box)
-    print("La racha de victorias mas larga del crupier fue de ", racha_crupier," victorias")
-    print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
-
+    if optin == 3:
+        if flag_finish_game == False:
+            print("No se concreto ninguna partida")
+        else:
+            print("\n\n")
+            print("ESTADISTICAS DEL JUEGO")
+            print("\nEl porcentaje de victorias del jugador es: ",(victory_player*100)/cont_games)
+            print("Cantidad de manos donde hubo un black jack natural: ",cant_blackjack_nat)
+            print("Monto maximo de",player_name,"en el pozo: ",amount_money_box_max)
+            print("La cantidad promedio de dinero que tuvo ",player_name," en su pozo fue: ",acu_amount_money_box / act_amount_money_box)
+            print("La racha de victorias mas larga del crupier fue de ", racha_crupier," victorias")
+            print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
 
