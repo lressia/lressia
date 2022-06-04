@@ -953,7 +953,7 @@ def main_game():
                 if (amount_money_box_plus + amount_money_box) <= 100000:
                     amount_money_box += amount_money_box_plus
                     act_amount_money_box += 1
-                    acu_amount_money_box += amount_money_box_plus
+                    acu_amount_money_box += amount_money_box
                 else:
                     print('El monto ingresado es menor o igual a 0 o... \nel total entre este monto y el primero supera la cantidad de 100000')
                     amount_money_box_plus = 0
@@ -1068,11 +1068,13 @@ def main_game():
                         max_bet_lost = bet
                 else:
                     victory_crupier_flag = False
+                    victory_crupier = 0
 
                 if victory_crupier_flag == True:
-                    racha_crupier += victory_crupier
+                    racha_crupier = victory_crupier               
                 else:
                     victory_crupier = 0
+                
                 if result[2] == 1:
                     victory_player += 1
 
@@ -1100,3 +1102,4 @@ def main_game():
             print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
+
