@@ -837,7 +837,7 @@ import random
 def as_control(score,card_value):
     value = card_value
     if score >= 11 and card_value == 11:
-        valor = 1
+        value = 1
     return value
 
 
@@ -996,43 +996,7 @@ def main_game():
                 control = natural_control(player_score, crupier_score)
                 winner = control[0]
                 if winner == True:
-                    result = check_result(player_name, player_score, bet, crupier_score)
-                    print(result[0])
-                    print("el saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
-                    print("la apuesta de ", player_name, " fue de:", bet)
-                    print("el saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
-                    print("las cartas de ", player_name, " fueron:", total_cards_player)
-                    print("las cartas del crupier fueron:",total_cards_crupier)
-
-                    #PROCESOS
-                    if result[2] == 2:
-                        victory_crupier_flag = True
-                        victory_crupier += 1
-                        if max_bet_lost == None:
-                            max_bet_lost = bet
-                        elif bet > max_bet_lost:
-                            max_bet_lost = bet
-                    else:
-                        victory_crupier_flag = False
-
-                    if victory_crupier_flag == True:
-                        racha_crupier += victory_crupier
-                    else:
-                        victory_crupier = 0
-                    if result[2] == 1:
-                        victory_player += 1
-
-                    cont_games += 1
                     cant_blackjack_nat += 1
-                    amount_money_box += result[1]
-                    #POZO
-                    if amount_money_box_max == None:
-                        amount_money_box_max = amount_money_box
-                    elif amount_money_box > amount_money_box_max:
-                        amount_money_box_max = amount_money_box
-                    act_amount_money_box += 1
-                    acu_amount_money_box += amount_money_box
-
                 else:
                     #GENERACION DE CARTAS DEL JUGADOR
                     print()
@@ -1061,57 +1025,58 @@ def main_game():
                     if desicion == 0:
                         print(player_name, " se planto")
                     #GENERACION DE CARTAS DEL CRUPIER
-                    while crupier_score < 21 and crupier_score < 17:
+                while crupier_score < 21 and crupier_score < 17:
 
-                        if crupier_score < 17:
-                            #GENERACION DE CARTA DEL CRUPIER
-                            crupier_card = card_generator()
-                            #VARIABLE PARA ACUMULAR
-                            card = crupier_card[0] + crupier_card[1]
-                            value_card = as_control(crupier_score,crupier_card[2])
-                            crupier_score += value_card
-                            total_cards_crupier += card
-                    if crupier_score >= 17 and crupier_score <= 21:
-                        print("el crupier se planto")
-                    elif crupier_score > 21:
-                        print("el crupier se paso")
+                    if crupier_score < 17:
+                        #GENERACION DE CARTA DEL CRUPIER
+                        crupier_card = card_generator()
+                        #VARIABLE PARA ACUMULAR
+                        card = crupier_card[0] + crupier_card[1]
+                        value_card = as_control(crupier_score,crupier_card[2])
+                        crupier_score += value_card
+                        total_cards_crupier += card
+                if crupier_score >= 17 and crupier_score <= 21:
+                    print("el crupier se planto")
+                elif crupier_score > 21:
+                    print("el crupier se paso")
 
-                    print("\n\n")
-                    result = check_result(player_name, player_score, bet, crupier_score)
-                    print(result[0])
-                    print("\nel saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
-                    print("la apuesta de ", player_name, " fue de:", bet)
-                    print("el saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
-                    print("las cartas de ", player_name, " fueron:", total_cards_player)
-                    print("las cartas del crupier fueron:",total_cards_crupier)
+                print("\n\n")
+                result = check_result(player_name, player_score, bet, crupier_score,winner)
 
-                                        #PROCESOS
-                    if result[2] == 2:
-                        victory_crupier_flag = True
-                        victory_crupier += 1
-                        if max_bet_lost == None:
-                            max_bet_lost = bet
-                        elif bet > max_bet_lost:
-                            max_bet_lost = bet
-                    else:
-                        victory_crupier_flag = False
+                print(result[0])
+                print("\nel saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
+                print("la apuesta de ", player_name, " fue de:", bet)
+                print("el saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
+                print("las cartas de ", player_name, " fueron:", total_cards_player)
+                print("las cartas del crupier fueron:",total_cards_crupier)
 
-                    if victory_crupier_flag == True:
-                        racha_crupier += victory_crupier
-                    else:
-                        victory_crupier = 0
-                    if result[2] == 1:
-                        victory_player += 1
+                            #PROCESOS
+                if result[2] == 2:
+                    victory_crupier_flag = True
+                    victory_crupier += 1
+                    if max_bet_lost == None:
+                        max_bet_lost = bet
+                    elif bet > max_bet_lost:
+                        max_bet_lost = bet
+                else:
+                    victory_crupier_flag = False
 
-                    cont_games += 1
-                    amount_money_box += result[1]
-                    #POZO
-                    if amount_money_box_max == None:
-                        amount_money_box_max = amount_money_box
-                    elif amount_money_box > amount_money_box_max:
-                        amount_money_box_max = amount_money_box
-                    act_amount_money_box += 1
-                    acu_amount_money_box += amount_money_box
+                if victory_crupier_flag == True:
+                    racha_crupier += victory_crupier
+                else:
+                    victory_crupier = 0
+                if result[2] == 1:
+                    victory_player += 1
+
+                cont_games += 1
+                amount_money_box += result[1]
+                #POZO
+                if amount_money_box_max == None:
+                    amount_money_box_max = amount_money_box
+                elif amount_money_box > amount_money_box_max:
+                    amount_money_box_max = amount_money_box
+                act_amount_money_box += 1
+                acu_amount_money_box += amount_money_box
 
     print("\n\n")
     print("ESTADISTICAS DEL JUEGO")
@@ -1122,6 +1087,8 @@ def main_game():
     print("La racha de victorias mas larga del crupier fue de ", racha_crupier," victorias")
     print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
+
 main_game()
+
 
 
