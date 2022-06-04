@@ -927,6 +927,7 @@ def main_game():
     amount_money_box_max = None
     max_bet_lost = None
     flag_finish_game = False
+    finish_racha_crupier = None
 
     # PEDIDO DE NOMBRE Y CANTIDAD DE DINERO
     player_name = str(input('Ingrese su nombre --> '))
@@ -1071,11 +1072,15 @@ def main_game():
                 else:
                     victory_crupier_flag = False
                     victory_crupier = 0
+                    racha_crupier = 0
 
                 if victory_crupier_flag == True:
                     racha_crupier = victory_crupier
-                else:
-                    victory_crupier = 0
+                
+                if finish_racha_crupier == None:
+                    finish_racha_crupier = racha_crupier
+                elif racha_crupier > finish_racha_crupier:
+                    finish_racha_crupier = racha_crupier
 
                 if result[2] == 1:
                     victory_player += 1
