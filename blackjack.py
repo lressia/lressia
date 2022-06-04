@@ -875,16 +875,16 @@ def check_result(player_name,player_score,bet,crupier_score,winner):
     message = None
     if winner == True:
         message = (player_name," gano por black jack natural")
-        amount_money_box = bet * 2
+        amount_money_box += bet
         winer = 1
     elif player_score <= 21:
         if crupier_score > 21:
             message =("El crupier se paso de 21 y ", player_name, "gana con ",player_score, "puntos")
-            amount_money_box = bet * 2
+            amount_money_box += bet
             winer = 1
         elif player_score > crupier_score:
             message = (player_name, "gana con ", player_score, "puntos")
-            amount_money_box = bet * 2
+            amount_money_box += bet
             winer = 1
         elif player_score == crupier_score:
             message = (player_name, "y el crupier empatan con ", crupier_score, "puntos")
@@ -959,7 +959,8 @@ def main_game():
                     amount_money_box_plus = 0
         #OPCION DE JUGAR UNA MANO
         elif option == 2:
-
+            if amount_money_box == 0 or amount_money_box < 5:
+                continue
             print("Su saldo disponible es :", amount_money_box)
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
             while bet > amount_money_box or bet <= 0 or (bet % 5) != 0:
@@ -1084,7 +1085,7 @@ def main_game():
                 act_amount_money_box += 1
                 acu_amount_money_box += amount_money_box
 
-    if optin == 3:
+    if option == 3:
         if flag_finish_game == False:
             print("No se concreto ninguna partida")
         else:
