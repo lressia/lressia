@@ -853,7 +853,6 @@ def card_generator():
     return names[index],pale,value[index]
 
 
-
 def natural_control(player_score, crupier_score):
     winner = 0
     winner_state = False
@@ -899,10 +898,12 @@ def check_result(player_name,player_score,bet,crupier_score,winner):
         message = (player_name, "y el crupier se pasaron de 21, así que el crupier gana")
         amount_money_box -= bet
         winer = 0
+
     else:
         message = (player_name, "se paso de 21 y el crupier gano con ", crupier_score, "puntos")
         amount_money_box -= bet
         winer = 2
+
     return message, amount_money_box, winer
 
 
@@ -932,52 +933,52 @@ def main_game():
 
     # PEDIDO DE NOMBRE Y CANTIDAD DE DINERO
     player_name = str(input('Ingrese su nombre --> '))
-    print('Bienvenido', player_name, '!, ahora ingrese su monto')
-    amount_money_box = int(input("ingrese la cantidad de dinero que desea tener en su pozo \nel monto no debe ser menor a 0 ni mayor a 100000$ -->"))
+    print('\nBienvenido', player_name, '!')
+    amount_money_box = int(input("\nIngrese la cantidad de dinero que desea tener en su pozo para comenzar\nEl monto no debe ser menor a 0 ni mayor a 100000$ --> "))
     while amount_money_box > 100000 or amount_money_box <= 0:
         print("no se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
         amount_money_box = int(input("ingrese la cantidad de dinero deseada --> "))
     acu_amount_money_box = amount_money_box
     if amount_money_box_max == None:
         amount_money_box_max = amount_money_box
+
     while option != 3:
-        print("MENU")
+        print("\nMENU")
         print(18*"-")
         print("1 - Apostar\n2 - Jugar una mano\n3 - Salir")
-        option = int(input("elija la opcion deseada --> "))
-        # hacer la despedida
-        print('\n\n')
+        print(18*"-")
+        option = int(input("Elija la opcion deseada --> "))
 
         #OPCION DE APUESTA
         if option == 1:
             amount_money_box_plus = 0
             while amount_money_box_plus <= 0 or amount_money_box_plus > 100000:
-                print("no se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
-                amount_money_box_plus = int(input("ingrese la cantidad de dinero deseada --> "))
+                print("\nNo se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
+                amount_money_box_plus = int(input("\nIngrese la cantidad de dinero deseada --> "))
                 if (amount_money_box_plus + amount_money_box) <= 100000:
                     amount_money_box += amount_money_box_plus
                     act_amount_money_box += 1
                     acu_amount_money_box += amount_money_box
                 else:
-                    print('El monto ingresado es menor o igual a 0 o... \nel total entre este monto y el primero supera la cantidad de 100000')
+                    print('\nEl monto ingresado es menor o igual a 0 o... \nEl total entre este monto y el primero supera la cantidad de 100000')
                     amount_money_box_plus = 0
         #OPCION DE JUGAR UNA MANO
         elif option == 2:
             if amount_money_box == 0 or amount_money_box < 5:
-                print("\n No tiene sificiente dinero. Volviendo al menu principal\n")
+                print("\nNo tiene sificiente dinero. Volviendo al menu principal")
                 continue
-            print("Su saldo disponible es :", amount_money_box)
-            bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
+            print("\nSu saldo disponible es :", amount_money_box)
+            bet = int(input("\nIngresar un apuesta inferior o igual al saldo disponible --> "))
             while bet > amount_money_box or bet <= 0 or (bet % 5) != 0:
                 if bet % 5 != 0:
-                    print("La apuesta debe ser múltiplo de 5. Ingrese otra vez: ")
+                    print("\nLa apuesta debe ser múltiplo de 5. Ingrese otra vez: ")
                 elif bet > amount_money_box:
-                    print("no cuentas con suficiente dinero para realizar esta apuesta")
+                    print("\nNo cuentas con suficiente dinero para realizar esta apuesta")
                 elif bet <= 0:
-                    print("La apuesta debe ser mayor que 0. Ingrese otra vez: ")
-                bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
+                    print("\nLa apuesta debe ser mayor que 0. Ingrese otra vez: ")
+                bet = int(input("\ningresar un apuesta inferior o igual al saldo disponible --> "))
             if bet == None:
-                print("debes apostar antes de jugar")
+                print("\nDebes apostar antes de jugar")
             else:
                 #return name,pale,value
                 #GENERACION DE CARTAS DEL CRUPIER
@@ -1000,28 +1001,31 @@ def main_game():
                 name_player_card2 = card_player_2[0] + card_player_2[1]
                 total_cards_player = name_player_card1 + name_player_card2
 
-                print("las primeras dos cartas de ", player_name, " son: \n--> ", total_cards_player, "\nla carta del crupier es: \n--> ",total_cards_crupier)
+                print("\nLas primeras dos cartas de ", player_name, " son: \n--> ", total_cards_player, "\nla carta del crupier es: \n--> ",total_cards_crupier)
 
                 #CONTROL BLACK JACK NATURAL
                 control = natural_control(player_score, crupier_score)
                 winner = control[0]
+
                 if winner == True:
                     cant_blackjack_nat += 1
                 else:
                     #GENERACION DE CARTAS DEL JUGADOR
                     print()
-                    print("SEGUIR JUEGO")
-                    print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                    print("\nSEGUIR JUEGO\n")
+                    print("\n1 - Si desea sacar otra carta\n0 - Si desea plantarse")
                     print()
-                    desicion = int(input("ingrese la opcion deseada --> "))
-                    while desicion != 1 and 0:
-                        print("debe ingresar una opcion valida")
-                        print()
-                        print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
-                        print()
-                        desicion = int(input("ingrese la opcion deseada --> "))
+                    decision = int(input("\nIngrese la opcion deseada --> "))
 
-                    while player_score < 21 and desicion == 1:
+                    while decision != 1 and decision != 0:
+                        print("\nDebe ingresar una opcion valida")
+                        print()
+                        print("\n1 - Si desea sacar otra carta\n0 - Si desea plantarse")
+                        print()
+                        decision = int(input("\nIngrese la opcion deseada --> "))
+                        print()
+
+                    while player_score < 21 and decision == 1:
                         #CARTAS SIGUIENTES DEL JUGADOR
                         player_card = card_generator()
                         #VARIABLES ACUMULADORAS
@@ -1033,24 +1037,23 @@ def main_game():
                         if player_score < 21:
                             #MENU PARA EL JUGADOR
                             print()
-                            print("SEGUIR JUEGO")
-                            print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                            print("\nSEGUIR JUEGO\n")
+                            print("\n 1 - Si desea sacar otra carta\n0 - Si desea plantarse")
                             print()
-                            desicion = int(input("ingrese la opcion deseada --> "))
-                            while desicion != 1 and 0:
-                                print("debe ingresar una opcion valida")
+                            decision = int(input("ingrese la opcion deseada --> "))
+                            while decision != 1 or 0:
+                                print("\nDebe ingresar una opcion valida")
                                 print()
-                                print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                                print("1 - Si desea sacar otra carta\n0 - Si desea plantarse")
                                 print()
-                                desicion = int(input("ingrese la opcion deseada --> "))
-
-                    if desicion == 0:
-                        print(player_name, " se planto")
+                                decision = int(input("\nIngrese la opcion deseada --> "))
+                    if decision == 0:
+                        print(player_name, " se plantó")
                     if player_score > 21:
-                        print(player_name," se paso")
+                        print(player_name," se pasó")
+
                     #GENERACION DE CARTAS DEL CRUPIER
                 while crupier_score < 21 and crupier_score < 17:
-
                     if crupier_score < 17:
                         #GENERACION DE CARTA DEL CRUPIER
                         crupier_card = card_generator()
@@ -1061,19 +1064,17 @@ def main_game():
                         total_cards_crupier += card
                 if winner == False:
                     if crupier_score >= 17 and crupier_score <= 21:
-                        print("el crupier se planto")
+                        print("El crupier se plantó")
                     elif crupier_score > 21:
-                        print("el crupier se paso")
-
-                print("\n\n")
+                        print("El crupier se pasó")
+                print("\n")
                 result = check_result(player_name, player_score, bet, crupier_score,winner)
-
                 print(result[0])
-                print("\nel saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
-                print("la apuesta de ", player_name, " fue de:", bet)
-                print("el saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
-                print("las cartas de ", player_name, " fueron:", total_cards_player)
-                print("las cartas del crupier fueron:",total_cards_crupier)
+                print("\nEl saldo de ", player_name, " antes de esta mano era de:", amount_money_box)
+                print("La apuesta de ", player_name, " fue de:", bet)
+                print("El saldo actual de ", player_name, " es de:", (amount_money_box + result[1]))
+                print("Las cartas de ", player_name, " fueron:", total_cards_player)
+                print("Las cartas del crupier fueron:",total_cards_crupier)
 
                             #PROCESOS
                 flag_finish_game = True
@@ -1088,18 +1089,14 @@ def main_game():
                     victory_crupier_flag = False
                     victory_crupier = 0
                     racha_crupier = 0
-
                 if victory_crupier_flag == True:
                     racha_crupier = victory_crupier
-
                 if finish_racha_crupier == None:
                     finish_racha_crupier = racha_crupier
                 elif racha_crupier > finish_racha_crupier:
                     finish_racha_crupier = racha_crupier
-
                 if result[2] == 1:
                     victory_player += 1
-
                 cont_games += 1
                 amount_money_box += result[1]
                 #POZO
@@ -1107,10 +1104,11 @@ def main_game():
                     amount_money_box_max = amount_money_box
                 act_amount_money_box += 1
                 acu_amount_money_box += amount_money_box
-
+        elif option != 1 and option != 2:
+            print("\nElija una opción válida\n")
     if option == 3:
         if flag_finish_game == False:
-            print("No se concreto ninguna partida")
+            print("\nNo se concreto ninguna partida")
         else:
             print("\n\n")
             print("ESTADISTICAS DEL JUEGO")
@@ -1122,5 +1120,3 @@ def main_game():
             print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
-
-
