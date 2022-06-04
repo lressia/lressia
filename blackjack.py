@@ -1109,16 +1109,14 @@ def main_game():
                     act_amount_money_box += 1
                     acu_amount_money_box += amount_money_box
 
-        elif opcion == 3:
-            print("\n\n")
-            print("ESTADISTICAS DEL JUEGO")
-            print("\nEl porcentaje de victorias del jugador es: ",(victory_player*100)/cont_games)
-            print("Cantidad de manos donde hubo un black jack natural: ",cant_blackjack_nat)
-            print("Monto maximo de",player_name,"en el pozo: ",amount_money_box_max)
-            print("La cantidad promedio de dinero que tuvo ",player_name," en su pozo fue: ",acu_amount_money_box / act_amount_money_box)
-            print("La racha de victorias mas larga del crupier fue de ", racha_crupier," victorias")
-            print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
-
+    print("\n\n")
+    print("ESTADISTICAS DEL JUEGO")
+    print("\nEl porcentaje de victorias del jugador es: ",(victory_player*100)/cont_games)
+    print("Cantidad de manos donde hubo un black jack natural: ",cant_blackjack_nat)
+    print("Monto maximo de",player_name,"en el pozo: ",amount_money_box_max)
+    print("La cantidad promedio de dinero que tuvo ",player_name," en su pozo fue: ",acu_amount_money_box / act_amount_money_box)
+    print("La racha de victorias mas larga del crupier fue de ", racha_crupier," victorias")
+    print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
 
