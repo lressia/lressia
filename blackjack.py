@@ -866,37 +866,41 @@ def natural_control(player_score, crupier_score):
     return winner_state, winner
 
 
-def check_result(player_name,player_score,bet,crupier_score):
+def check_result(player_name,player_score,bet,crupier_score,winner):
     amount_money_box = 0
-    winner = None
-
+    winer = None
+    winner = winner
     message = None
-    if player_score <= 21:
+    if winner == True:
+        message = (player_name," gano por black jack natural")
+        amount_money_box = bet * 2
+        winer = 1
+    elif player_score <= 21:
         if crupier_score > 21:
             message =("El crupier se paso de 21 y ", player_name, "gana con ",player_score, "puntos")
             amount_money_box = bet * 2
-            winner = 1
+            winer = 1
         elif player_score > crupier_score:
             message = (player_name, "gana con ", player_score, "puntos")
             amount_money_box = bet * 2
-            winner = 1
+            winer = 1
         elif player_score == crupier_score:
             message = (player_name, "y el crupier empatan con ", crupier_score, "puntos")
-            amount_money_box = bet
-            winner = 0
+            amount_money_box = 0
+            winer = 0
         else:
             message = ("El crupier gano con ", crupier_score, "puntos")
             amount_money_box -= bet
-            winner = 2
+            winer = 2
     elif crupier_score > 21:
         message = (player_name, "y el crupier se pasaron de 21, así que el crupier gana")
         amount_money_box -= bet
-        winner = 0
+        winer = 0
     else:
         message = (player_name, "se paso de 21 y el crupier gano con ", crupier_score, "puntos")
         amount_money_box -= bet
-        winner = 2
-    return message, amount_money_box, winner
+        winer = 2
+    return message, amount_money_box, winer
 
 
 def main_game():
