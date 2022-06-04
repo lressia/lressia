@@ -853,6 +853,7 @@ def card_generator():
     return names[index],pale,value[index]
 
 
+
 def natural_control(player_score, crupier_score):
     winner = 0
     winner_state = False
@@ -1013,6 +1014,13 @@ def main_game():
                     print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
                     print()
                     desicion = int(input("ingrese la opcion deseada --> "))
+                    while desicion != 1 or 0:
+                        print("debe ingresar una opcion valida")
+                        print()
+                        print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                        print()
+                        desicion = int(input("ingrese la opcion deseada --> "))
+
                     while player_score < 21 and desicion == 1:
                         #CARTAS SIGUIENTES DEL JUGADOR
                         player_card = card_generator()
@@ -1029,6 +1037,13 @@ def main_game():
                             print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
                             print()
                             desicion = int(input("ingrese la opcion deseada --> "))
+                            while desicion != 1 or 0:
+                                print("debe ingresar una opcion valida")
+                                print()
+                                print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
+                                print()
+                                desicion = int(input("ingrese la opcion deseada --> "))
+
                     if desicion == 0:
                         print(player_name, " se planto")
                     if player_score > 21:
@@ -1076,7 +1091,7 @@ def main_game():
 
                 if victory_crupier_flag == True:
                     racha_crupier = victory_crupier
-                
+
                 if finish_racha_crupier == None:
                     finish_racha_crupier = racha_crupier
                 elif racha_crupier > finish_racha_crupier:
@@ -1107,4 +1122,5 @@ def main_game():
             print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
+
 
