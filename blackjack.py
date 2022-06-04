@@ -934,9 +934,6 @@ def main_game():
         print(18*"-")
         print("1 - Apostar\n2 - Jugar una mano\n3 - Salir")
         option = int(input("elija la opcion deseada --> "))
-        while option != 1 or 2 or 3:
-            print("la opcion seleccionada es invalida")
-            option = int(input("elija la opcion deseada --> "))
         # hacer la despedida
         print('\n\n')
 
