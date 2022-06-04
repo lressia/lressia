@@ -111,15 +111,20 @@ def main_game():
         elif option == 2:
 
             round = 1
+            print("Su saldo disponible es:", amount_money_box)
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
             while bet > amount_money_box or bet < 0 or (bet % 5) != 0:
 
                 if bet % 5 != 0:
+                    print("Su saldo disponible es:", amount_money_box)
                     print("La apuesta debe ser múltiplo de 5. Ingrese otra vez: ")
                 elif bet > amount_money_box:
+                    print("Su saldo disponible es:", amount_money_box)
                     print("no cuentas con suficiente dinero para realizar esta apuesta")
                 elif bet < 0:
+                    print("Su saldo disponible es:", amount_money_box)
                     print("La apuesta debe ser mayor que 0. Ingrese otra vez: ")
+                print("Su saldo disponible es:", amount_money_box)
                 bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
             if bet == None:
                 print("debes apostar antes de jugar")
@@ -211,6 +216,9 @@ def main_game():
                         print("las cartas de ", player_name, " fueron:", total_cards_player, "y su puntaje es: ", player_score)
                         print("las cartas del crupier fueron:", total_cards_crupier, "y su puntaje es: ", crupier_score)
                         print("El procentaje de victorias del jugador fue de:", winner_times[0], "%")
+
+main_game()
+
 
 # 21 BLACKJACK
 
