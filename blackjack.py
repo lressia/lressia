@@ -959,7 +959,8 @@ def main_game():
                     amount_money_box_plus = 0
         #OPCION DE JUGAR UNA MANO
         elif option == 2:
-
+            
+            print("Su saldo disponible es :", amount_money_box)
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
             while bet > amount_money_box or bet <= 0 or (bet % 5) != 0:
                 if bet % 5 != 0:
