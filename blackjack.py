@@ -936,6 +936,8 @@ def main_game():
         print("no se puede ingresar una cantidad superior a 100000$ ni menor o igual a 0")
         amount_money_box = int(input("ingrese la cantidad de dinero deseada --> "))
     acu_amount_money_box = amount_money_box
+    if amount_money_box_max == None:
+        amount_money_box_max = amount_money_box
     while option != 3:
         print("MENU")
         print(18*"-")
@@ -1071,19 +1073,17 @@ def main_game():
                     victory_crupier = 0
 
                 if victory_crupier_flag == True:
-                    racha_crupier = victory_crupier               
+                    racha_crupier = victory_crupier
                 else:
                     victory_crupier = 0
-                
+
                 if result[2] == 1:
                     victory_player += 1
 
                 cont_games += 1
                 amount_money_box += result[1]
                 #POZO
-                if amount_money_box_max == None:
-                    amount_money_box_max = amount_money_box
-                elif amount_money_box > amount_money_box_max:
+                if amount_money_box > amount_money_box_max:
                     amount_money_box_max = amount_money_box
                 act_amount_money_box += 1
                 acu_amount_money_box += amount_money_box
