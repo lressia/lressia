@@ -1014,7 +1014,7 @@ def main_game():
                     print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
                     print()
                     desicion = int(input("ingrese la opcion deseada --> "))
-                    while desicion != 1 or 0:
+                    while desicion != 1 and 0:
                         print("debe ingresar una opcion valida")
                         print()
                         print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
@@ -1037,7 +1037,7 @@ def main_game():
                             print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
                             print()
                             desicion = int(input("ingrese la opcion deseada --> "))
-                            while desicion != 1 or 0:
+                            while desicion != 1 and 0:
                                 print("debe ingresar una opcion valida")
                                 print()
                                 print("si desea sacar otra carta ingrese - 1\nsi desea plantarse ingrese - 0")
