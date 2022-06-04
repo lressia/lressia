@@ -960,6 +960,7 @@ def main_game():
         #OPCION DE JUGAR UNA MANO
         elif option == 2:
             if amount_money_box == 0 or amount_money_box < 5:
+                print("\n No tiene sificiente dinero. Volviendo al menu principal\n")
                 continue
             print("Su saldo disponible es :", amount_money_box)
             bet = int(input("ingresar un apuesta inferior o igual al saldo disponible --> "))
@@ -1058,7 +1059,7 @@ def main_game():
 
                             #PROCESOS
                 flag_finish_game = True
-                if result[2] == 2:
+                if result[2] == 2 or result[2] == 0:
                     victory_crupier_flag = True
                     victory_crupier += 1
                     if max_bet_lost == None:
@@ -1099,6 +1100,3 @@ def main_game():
             print("La apuesta mas grande que perdio ",player_name," fue de ",max_bet_lost,"$")
 
 main_game()
-
-
-
